@@ -2,6 +2,7 @@ import os
 
 from dotenv import load_dotenv
 from langchain_core.prompts import PromptTemplate
+from langchain_ollama import ChatOllama
 from langchain_openai import ChatOpenAI
 
 load_dotenv()
@@ -14,9 +15,10 @@ def main():
     query_template = "Give me short 3 to 4 lines answer for the question: {query}"
     query_prompt = PromptTemplate.from_template(query_template)
     # query_prompt.format(query=query)
-    llm = ChatOpenAI(
-        model="gpt-4.1-nano", temperature=0, max_retries=3, timeout=60, max_tokens=500
-    )
+    # llm = ChatOpenAI(
+    #     model="gpt-4.1-nano", temperature=0, max_retries=3, timeout=60, max_tokens=500
+    # )
+    llm = ChatOllama(model="gemma3:270m", temperature=0)
     chain = query_prompt | llm
     ## output of left component is passed as input to right component.
     ## In out case query_prompt's output is passed as input to llm
